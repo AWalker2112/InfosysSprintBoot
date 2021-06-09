@@ -1,6 +1,7 @@
 package com.qa.starterproject.domain;
 
 public class Person {
+	
 	private String name;
 	private String gender;
 	private int age;
@@ -28,6 +29,7 @@ public class Person {
 	
 	
 	
+	
 	//constructor
 	public Person(String name, String gender, int age) {
 		super();
@@ -35,6 +37,7 @@ public class Person {
 		this.gender = gender;
 		this.age = age;
 	}
+	
 	
 	
 	
