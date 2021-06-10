@@ -44,7 +44,7 @@ public class PersonController {
 	
 	//GET ONE
 	@GetMapping("/getOne/{index}")
-	public ResponseEntity<Person> getVehicle(@PathVariable Long id) {
+	public ResponseEntity<Person> getPerson(@PathVariable Long id) {
 		return ResponseEntity.ok(this.service.getPerson(id));
 	}
 
