@@ -1,12 +1,10 @@
 package com.qa.starterproject.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.websocket.server.PathParam;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,46 +14,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.starterproject.domain.Person;
+import com.qa.starterproject.service.PersonService;
 
 @RestController
 public class PersonController {
-	
-	private List<Person> people = new ArrayList<>();
-	
-	@GetMapping("/test")
-    public String test() {
-        return "Hello, World!";
+
+	private PersonService service;
+
+    public PersonController(PersonService service) {
+        super();
+        this.service = service;
     }
-	
-	
-	
-	
-	@PostMapping("/create")
-    public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-		
-        this.people.add(person);
-        Person added = this.people.get(this.people.size()-1);
-        return new ResponseEntity<Person>(added, HttpStatus.CREATED); 
+
+    // CRUD methods
+    @PostMapping("/create")
+    public Person addPerson(@RequestBody Person person) {
+        return this.service.addPerson(person);
     }
-	@GetMapping("/getAll")
-    public List<Person> getAll() {
-        return this.people;
+
+    @GetMapping("/getAll")
+    public List<Person> getAllPeople() {
+        return this.service.getAll();
     }
-	
-	@PutMapping("/update")
+
+    @PutMapping("/update")
     public Person updatePerson(@PathParam("id") int id, @RequestBody Person person) {
-        // Remove existing Person with matching 'id'
-        this.people.remove(id);
-        // Add new Person in its place
-        this.people.add(id, person);
-        // Return updated Person from List
-        return this.people.get(id);
+        return this.service.updatePerson(id, person);
     }
-	
-	 @DeleteMapping("/delete/{id}")
-	    public Person removePerson(@PathVariable int id) {
-	        // Remove Person and return it
-	        return this.people.remove(id);
-	    }
-	
+
+    @DeleteMapping("/delete/{id}")
+    public Person removePerson(@PathVariable int id) {
+        return this.service.removePerson(id);
+    }
+
 }
