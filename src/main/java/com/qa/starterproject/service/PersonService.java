@@ -41,9 +41,11 @@ public class PersonService {
 	
 	// UPDATE
 	public Person updatePerson(Long id, Person person) {
-		Optional<Person> toBeUpdated = this.repo.findById(id);
-		toBeUpdated = Optional.of(person); 
-		return person; 
+		//Optional<Person> toBeUpdated = this.repo.findById(id);
+		//toBeUpdated = Optional.of(person); 
+		Person toUpdate = this.repo.findById(id).orElseThrow();
+		toUpdate = person;
+		return this.repo.save(toUpdate); 
 	}
 
 	// DELETE

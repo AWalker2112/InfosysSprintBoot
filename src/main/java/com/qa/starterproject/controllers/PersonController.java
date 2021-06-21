@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.qa.starterproject.service.PersonService;
 
 @RestController
 @RequestMapping("/person")
+@CrossOrigin
 public class PersonController {
 
 	private PersonService service;
@@ -43,16 +45,16 @@ public class PersonController {
 	}
 	
 	//GET ONE
-	@GetMapping("/getOne/{index}")
+	@GetMapping("/getOne/{id}")
 	public ResponseEntity<Person> getPerson(@PathVariable Long id) {
 		return ResponseEntity.ok(this.service.getPerson(id));
 	}
 
 	//PUT
-	@PutMapping("/update")
-	public ResponseEntity<Person> updatePerson(@PathParam("id") Long id, @RequestBody Person person) {
-		this.service.updatePerson(id, person);
-		return new ResponseEntity<Person>(person, HttpStatus.ACCEPTED);
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Person> updatePerson(@PathVariable Long id, @RequestBody Person person) {
+		
+		return new ResponseEntity<>(this.service.updatePerson(id, person), HttpStatus.ACCEPTED);
 	}
 	
 
